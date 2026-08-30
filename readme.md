@@ -2,7 +2,7 @@
 
 # 🎓 Education Management System
 
-**A production-grade, multi-tenant School/Institution management SaaS backend, built with FastAPI.**
+**A production-oriented, multi-tenant School/Institution management SaaS backend, built with FastAPI.**
 
 Students, staff, billing, exams, admissions, public landing pages, and multi-channel communication for many institutions on one platform — with a built-in OpenAI-powered support agent and real usage metering baked into the API itself.
 
@@ -106,7 +106,7 @@ This isn't a single "fees" table — it's a proper billing subsystem:
 ### 📧 Transactional Email
 - HTML email templates sent via **Resend** (`app/services/email.py`) — account activation, notifications, and branded institution communications.
 
-### 🛡️ Production-Grade Engineering Details
+### 🛡️ production-oriented Engineering Details
 - **Fully async stack**: FastAPI + SQLAlchemy 2.0 async engine + asyncpg-style connection pooling (`pool_size`, `max_overflow`, `pool_pre_ping`, `pool_recycle` all explicitly tuned).
 - **31 custom domain exceptions** (`app/core/exceptions.py`) — `UserNotFoundException`, `ClassCapacityExceededError`, `InstitutionAlreadyExistsError`, `InsufficientPermissionError`, `RateLimitExceededError`, and more — each mapped to a dedicated handler in `app/core/exception_handlers.py` for consistent, predictable API responses instead of leaking stack traces.
 - **In-process sliding-window rate limiting** (`app/rate_limiter.py`) with per-IP or per-user keys, `Retry-After` headers, and reverse-proxy-aware IP resolution — no Redis required to get real protection.
@@ -304,15 +304,12 @@ This project intentionally avoids the "one big `main.py`" trap:
 
 ## 🗺️ Roadmap Ideas
 
-- [x] Add automated test suite (pytest + httpx async client)
-- [ ] Add CI (GitHub Actions) to run the test suite on every push/PR
-- [ ] Ship the Alembic harness (`alembic.ini` + `env.py` wired to the async engine, empty `versions/`) so contributors can run their own migrations without configuring it from scratch — intentionally not committing migration history itself is a reasonable choice for a template project
-- [ ] Fix `.gitignore`: `.env.*` currently also blocks committing `.env.example` — narrow it (`.env` + explicit `!.env.example`) so a template env file can actually be tracked
-- [ ] OpenAPI-generated TypeScript client for frontend consumption
-- [ ] Move automated invoice generation from manual/cron trigger to a managed task queue (Celery/APScheduler-in-process)
-- [ ] Complete SMS channel support alongside the existing WhatsApp/Email automation logs
-- [ ] Wire up the 2FA fields already present on both the user and super-admin models
-
+- [ ] Add CI with GitHub Actions
+- [ ] Ship an optional Alembic harness for contributors
+- [ ] Add OpenAPI-generated TypeScript client
+- [ ] Move automated invoice generation to a managed task queue
+- [ ] Complete SMS channel support
+- [ ] Wire up the existing 2FA fields
 ---
 
 ## 👤 Author
